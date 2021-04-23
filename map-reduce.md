@@ -1,5 +1,8 @@
 
 ## map-red编程框架
+### 数据类型
+Text String类型
+各种原生类型的Writable实现 为了更高效率的序列化
 ### mapper类
 接受<K, V>读取文件 处理每一行 输出<K, V>
 ### reduce类
@@ -7,7 +10,7 @@
 ### driver类
 设置job对象
 设置jar存储路径
-管理mapper和reducer类
+关联mapper和reducer类 setMapperClass setReducerClass
 设置mapper输出的key和value类型
 设置输入输出路径 通常是hdfs文件系统路径
 提交job
@@ -35,4 +38,10 @@
 默认输入器 K = 文件内偏移量 value=line_text 按行读取文本文件 
 #### KeyValueTextInputFormat
 每一行用 \t 分割成 key value的格式 也可以设置分隔符
+#### NLineInputformat
+map不再按照块切分 而是按照行数来划分 map进程
+#### 自定义InputFormat
+重写 isSplitable
+重写 createRecordReader
+改写RecordReader 
 
