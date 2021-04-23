@@ -35,6 +35,7 @@ Text String类型
 
 ### 文件输入
 #### TextInputFormat
+---
 默认输入器 K = 文件内偏移量 value=line_text 按行读取文本文件 
 #### KeyValueTextInputFormat
 每一行用 \t 分割成 key value的格式 也可以设置分隔符
