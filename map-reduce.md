@@ -35,7 +35,6 @@ Text String类型
 
 ### 文件输入
 #### TextInputFormat
----
 默认输入器 K = 文件内偏移量 value=line_text 按行读取文本文件 
 #### KeyValueTextInputFormat
 每一行用 \t 分割成 key value的格式 也可以设置分隔符
@@ -45,4 +44,20 @@ map不再按照块切分 而是按照行数来划分 map进程
 重写 isSplitable
 重写 createRecordReader
 改写RecordReader 
+
+## mapTask工作流程
+read阶段 读取原始文件
+map阶段 执行mapper函数
+collect阶段 写环形缓冲区
+溢写阶段 写到磁盘分区且区内有序 快排
+combine阶段 归并排序
+
+## reduceTask工作流程
+全部map任务结束后开始reduce阶段
+copy阶段 每个分区copy到reduce机器上 每个分区一个reduceTask reduce的机器主动拉取数据 文件小放在内存 超出则落盘
+merge阶段 合并文件 归并排序 
+sort阶段 归并排序
+reduce阶段 执行reduce方法 所有key相同的进到同一个reduce里面
+textOutPutFormat写出数据到hdfs
+
 
